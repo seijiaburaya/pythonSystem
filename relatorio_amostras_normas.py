@@ -3,6 +3,8 @@ from fpdf import FPDF
 def quantidade_amostras_iso(tamanho_lote):
     if tamanho_lote <= 100:
         return 10
+    elif 101 <= tamanho_lote <= 500:
+        return 30
     elif 501 <= tamanho_lote <= 3200:
         return 50
     elif 3201 <= tamanho_lote <= 10000:
@@ -12,7 +14,7 @@ def quantidade_amostras_iso(tamanho_lote):
     elif tamanho_lote > 35000:
         return 200
     else:
-        return 10  # Para lotes entre 101 e 500
+        return 10
 
 def limite_inmetro(peso_nominal):
     if peso_nominal <= 50:
@@ -77,6 +79,9 @@ def gerar_pdf(amostras, resultados, soma, media, todas_dentro, peso_nominal, lim
     pdf.ln()
     pdf.cell(50, 8, "Até 100", border=1, align="C")
     pdf.cell(60, 8, "10", border=1, align="C")
+    pdf.ln()
+    pdf.cell(50, 8, "101 a 500", border=1, align="C")
+    pdf.cell(60, 8, "30", border=1, align="C")
     pdf.ln()
     pdf.cell(50, 8, "501 a 3.200", border=1, align="C")
     pdf.cell(60, 8, "50", border=1, align="C")
@@ -161,7 +166,7 @@ def main():
             break
         except ValueError:
             print("Digite um valor numérico válido para o lote.")
-    qtd_amostras = quantidade_amostras_isso(tamanho_lote)
+    qtd_amostras = quantidade_amostras_iso(tamanho_lote)
     print(f"Quantidade de amostras a serem coletadas (ISO): {qtd_amostras}")
 
     while True:
@@ -181,5 +186,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-    

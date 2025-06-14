@@ -15,8 +15,8 @@ st.title("Relatório de Amostras - INMETRO/ISO")
 
 st.write("Preencha os dados abaixo para gerar o relatório em PDF:")
 
-tamanho_lote = st.number_input("Tamanho do lote", min_value=1, step=1)
-peso_nominal = st.number_input("Peso nominal (g)", min_value=0.01, step=0.01, format="%.2f")
+tamanho_lote = st.number_input("Tamanho do lote", min_value=1, step=1, format="%d")
+peso_nominal = st.number_input("Peso nominal (g)", min_value=1, step=1, format="%d")
 
 if tamanho_lote and peso_nominal:
     qtd_amostras = quantidade_amostras_iso(tamanho_lote)
@@ -30,7 +30,9 @@ if tamanho_lote and peso_nominal:
     cols = st.columns(5)
     for i in range(qtd_amostras):
         col = cols[i % 5]
-        amostra = col.number_input(f"Amostra {i+1:02}", key=f"amostra_{i}", min_value=0.0, step=0.01, format="%.2f")
+        amostra = col.number_input(
+            f"Amostra {i+1:02}", key=f"amostra_{i}", min_value=0, step=1, format="%d"
+        )
         amostras.append(amostra)
 
     if st.button("Gerar PDF"):
